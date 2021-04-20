@@ -25,15 +25,15 @@ const renderItem: ListRenderItem<Location> = ({item}) => {
   return <LocationItem {...item} />;
 };
 
-function LocationItem({name, temp, weather, coord}: Location) {
+function LocationItem(location: Location) {
+  const {name, temp, weather} = location;
   const navigateion = useNavigation();
   return (
     <TouchableOpacity
       style={styles.itemContainer}
       onPress={() => {
         navigateion.navigate('map', {
-          lat: coord.lat,
-          lng: coord.lon,
+          location,
         });
       }}>
       <View>
