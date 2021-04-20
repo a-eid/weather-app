@@ -7,16 +7,24 @@ import {
   FlatList,
   ListRenderItem,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {Location, useLocations} from '../hooks';
 
 export function LocationList() {
-  const {locations} = useLocations();
+  const {locations, status} = useLocations();
   return (
     <FlatList
       data={locations}
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
+      ListEmptyComponent={
+        <ActivityIndicator
+          style={styles.indicator}
+          animating={status === 'loading'}
+          hidesWhenStopped
+        />
+      }
     />
   );
 }
@@ -59,4 +67,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
   },
+  indicator: {margin: 25},
 });
